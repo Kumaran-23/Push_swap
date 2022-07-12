@@ -12,68 +12,83 @@
 
 #include "libft.h"
 
-static int	ft_wordcounter(char const *s, char c)
+
+static int	ft_count_words(char const *str, char c)
 {
-	size_t	i;
-	size_t	count;
+	int	i;
+	int	count;
 
 	i = 0;
 	count = 0;
-	while (s[i])
+	while (str[i] != '\0')
 	{
-		if (s[i] != c)
+		if (str[i] == c)
+			i++;
+		else
 		{
 			count++;
-			while (s[i] && s[i] != c)
+			while (str[i] && str[i] != c)
 				i++;
 		}
-		i++;
 	}
 	return (count);
 }
 
-static char	*ft_strndup(const char *s, size_t n)
+static char	*ft_putword(char *word, char const *s, int i, int word_len)
 {
-	char	*dup;
-	size_t	i;
+	int	j;
+
+	j = 0;
+	while (word_len > 0)
+	{
+		word[j] = s[i - word_len];
+		j++;
+		word_len--;
+	}
+	word[j] = '\0';
+	return (word);
+}
+
+static char	**ft_split_words(char const *s, char c, char **s2, int num_words)
+{
+	int	i;
+	int	word;
+	int	word_len;
 
 	i = 0;
-	dup = (char *)malloc(sizeof(char) * n + 1);
-	if (!dup)
-		return (NULL);
-	while (s[i] && i < n)
+	word = 0;
+	word_len = 0;
+	while (word < num_words)
 	{
-		dup[i] = s[i];
-		i++;
+		while (s[i] && s[i] == c)
+			i++;
+		while (s[i] && s[i] != c)
+		{
+			i++;
+			word_len++;
+		}
+		s2[word] = (char *)malloc(sizeof(char) * (word_len + 1));
+		if (!s2)
+			return (0);
+		ft_putword(s2[word], s, i, word_len);
+		word_len = 0;
+		word++;
 	}
-	dup[n] = '\0';
-	return (dup);
+	s2[word] = 0;
+	return (s2);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**result;
-	size_t	i;
-	size_t	j;
-	size_t	len;
+	char			**s2;
+	unsigned int	num_words;
 
-	i = 0;
-	j = 0;
 	if (!s)
-		return (NULL);
-	result = (char **)malloc(sizeof(char *) * (ft_wordcounter(s, c) + 1));
-	if (!result)
-		return (NULL);
-	while (s[i])
-	{
-		while (s[i] == c)
-			i++;
-		len = i;
-		while (s[i] && s[i] != c)
-			i++;
-		if (i > len)
-			result[j++] = ft_strndup(&s[len], i - len);
-	}
-	result[j] = NULL;
-	return (result);
+		return (0);
+	num_words = ft_count_words(s, c);
+	s2 = (char **)malloc(sizeof(char *) * (num_words + 1));
+	if (!s2)
+		return (0);
+	ft_split_words(s, c, s2, num_words);
+	return (s2);
 }
