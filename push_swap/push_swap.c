@@ -101,15 +101,11 @@ char	**ft_split(char const *s, char c)
 
 int main(int argc, char **argv)
 {
-    t_stack stack;
-
-    if(argc > 1)
+	if(argc > 1)
     {
         argv++;
         if(argc == 2)
             argv = ft_split(*argv, ' ');
         init_stack(argv);
-        free(stack.a);
-        free(stack.b);
     }
 }
