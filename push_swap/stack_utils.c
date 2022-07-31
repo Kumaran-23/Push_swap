@@ -1,20 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-//#include "push_swap.h"
-//#include "libft.h"
-
-typedef struct p_stack
-{
-    int *a;
-    int *b;
-    int a_size;
-    int b_size;
-}       t_stack;
+#include "../inc/push_swap.h"
+#include "../libft/inc/ft_printf.h"
 
 void    error(int *stack)
 {
     free(stack);
-    printf("Error\n");
+    ft_printf("Error\n");
     exit(1);
 }
 
@@ -65,46 +55,55 @@ int new_atoi(char *str, int *stack)
 }
 
 /* to check if stack is sorted in ascending order */
-int	sorted(int *stack, int size)
+int	sorted(int *stack, int size, int order)
 {
-	int a; 
-	int	d;
 	int	i;
 
-	a = 1;
-	d = 1;
-	i = 0;
-  while ((a == 1 || d == 1) && i < size - 1) {
-    if (stack[i] < stack[i+1])
-      d = 0;
-    else if (stack[i] > stack[i+1])
-      a = 0;
-    i++;
-  }
-
-  if (a == 1)
-  {
-	printf("Sorted\n");
-	return 1;
-  }
-  else
-  {
-	printf("Not Sorted\n");
-	return 0;
-  }
+	if (order == 0)
+	{
+		i = 1;
+		while (i < size)
+		{
+			if (stack[i] < stack[i - 1])
+				return (0);
+			i++;
+		}
+		return (1);
+	}
+	else
+	{
+		i = 1;
+		while (i < size)
+		{
+			if (stack[i - 1] < stack[i])
+				return (0);
+			i++;
+		}
+		return (1);
+	}
 }
 
 
 
-void display(int *stack, int size)
+void displayA(int *stack, int size)
 {
 	int i;
+	printf("Stack A:\n");
 	for(i = 0; i < size; i++)
 	{
 		printf("%d\n", stack[i]);
 	}
 }
 
+void displayB(int *stack, int size)
+{
+	int i;
+	printf("Stack B:\n");
+	for(i = 0; i < size; i++)
+	{
+		printf("%d\n", stack[i]);
+	}
+}
 /* to check duplicate numbers in stack */
 void	check_dup(int *stack, int size)
 {
@@ -124,125 +123,4 @@ void	check_dup(int *stack, int size)
 		i++;
 		j = i + 1;
 	}
-}
-
-void    init_stack(char **argv)
-{
-    t_stack     stack;
-    int         size;
-    int         i;
-
-    i = -1;
-    size = argv_strlen(argv);
-    stack.a = (int *)malloc(sizeof(int) * size);
-    stack.a_size = size;
-    if(!stack.a)
-        return ; 
-    stack.b = (int *)malloc(sizeof(int) * size);
-    if(!stack.b)
-    {
-        free(stack.a);
-        return ;
-    }
-	stack.b_size = 0;
-    while(++i < size)
-        stack.a[i] = new_atoi(argv[i], stack.a);
-    check_dup(stack.a, size);
-	sorted(stack.a, stack.a_size);
-	display(stack.a, stack.a_size);
-}
-
-static int	ft_count_words(char const *str, char c)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == c)
-			i++;
-		else
-		{
-			count++;
-			while (str[i] && str[i] != c)
-				i++;
-		}
-	}
-	return (count);
-}
-
-static char	*ft_putword(char *word, char const *s, int i, int word_len)
-{
-	int	j;
-
-	j = 0;
-	while (word_len > 0)
-	{
-		word[j] = s[i - word_len];
-		j++;
-		word_len--;
-	}
-	word[j] = '\0';
-	return (word);
-}
-
-static char	**ft_split_words(char const *s, char c, char **s2, int num_words)
-{
-	int	i;
-	int	word;
-	int	word_len;
-
-	i = 0;
-	word = 0;
-	word_len = 0;
-	while (word < num_words)
-	{
-		while (s[i] && s[i] == c)
-			i++;
-		while (s[i] && s[i] != c)
-		{
-			i++;
-			word_len++;
-		}
-		s2[word] = (char *)malloc(sizeof(char) * (word_len + 1));
-		if (!s2)
-			return (0);
-		ft_putword(s2[word], s, i, word_len);
-		word_len = 0;
-		word++;
-	}
-	s2[word] = 0;
-	return (s2);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	char			**s2;
-	unsigned int	num_words;
-
-	if (!s)
-		return (0);
-	num_words = ft_count_words(s, c);
-	s2 = (char **)malloc(sizeof(char *) * (num_words + 1));
-	if (!s2)
-		return (0);
-	ft_split_words(s, c, s2, num_words);
-	return (s2);
-}
-
-int main(int argc, char **argv)
-{
-    /*t_stack stack;*/
-
-    if(argc > 1)
-    {
-        argv++;
-        if(argc == 2)
-            argv = ft_split(*argv, ' ');
-        init_stack(argv);
-		return(0);
-    }
-	return(0);
 }
