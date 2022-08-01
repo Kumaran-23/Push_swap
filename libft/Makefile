@@ -6,6 +6,11 @@ GCC 			= gcc -c -Wall -Wextra -Werror -I
 AR 				= ar rcs
 RM 				= rm -f
 
+GREEN		=	\033[1;92m
+YELLOW		=	\033[1;93m
+BLUE		=	\033[0;94m
+WHITE		=	\033[0;97m
+
 #src
 
 LIBFT_DIR		=	libft/
@@ -30,8 +35,9 @@ SRC_FILES+=$(addprefix $(FTPRINTF_DIR),$(FTPRINTF))
 SRC 		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 
 start:		
-		@echo "Starting Make"
+		@echo "$(YELLOW)Starting Make libft:$(WHITE)"
 		@make all
+		@echo "$(GREEN)Done!$(WHITE)"
 all: $(NAME)
 
 $(NAME): $(OBJ)
@@ -42,12 +48,13 @@ $(NAME): $(OBJ)
 				
 clean:
 		@$(RM) $(OBJ)
-		@echo "Cleaned!"
+		@echo "$(BLUE)Libft object files have been cleaned!$(WHITE)"
 
 fclean: clean
 		@$(RM) $(NAME)
-		@echo "Cleaned!"
+		@echo "$(BLUE)Libft files have beeb cleaned!$(WHITE)"
 
 re: fclean all
+	@echo "$(GREEN)Cleaned and rebuilt everything for Libft\n$(WHITE)"
 
 .PHONY:		all clean fclean re
