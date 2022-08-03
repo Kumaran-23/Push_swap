@@ -17,26 +17,38 @@ int	sort_stack(t_stack *stack, int size)
 	return (0);
 }
 
+void    leakfix(int *a, int *b, int size)
+ {
+    if (size != 4 && size != 8 && size != 12)
+    {
+        free(a);
+        free(b);
+    }
+ }
+
 void    init_stack(char **argv)
 {
-    t_stack     stack;
-    int         size;
-    int         i;
+    t_stack 	stack;
+	int			size;
+	int			i;
 
-    i = -1;
-    size = argv_strlen(argv);
-    stack.a = malloc(sizeof(int) * size);
-    stack.a_size = size;
-    if(!stack.a)
-        return ; 
-    stack.b = malloc(sizeof(int) * size);
-    stack.b_size = 0;
-    while(++i < size)
-        stack.a[i] = new_atoi(argv[i], stack.a);
-    check_dup(stack.a, size);
+	i = -1;
+	size = argv_strlen(argv);
+	stack.a = malloc(size * sizeof(int));
+	stack.a_size = size;
+	stack.b = malloc(size * sizeof(int));
+	stack.b_size = 0;
+	while (++i < size)
+		stack.a[i] = new_atoi(argv[i], stack.a);
+	check_dup(stack.a, size);
+   if (sorted(stack.a, stack.a_size, 0) == 1)
+   {
+        free(stack.a);
+        free(stack.b);
+        return ;
+    }
 	sort_stack(&stack, size);
-	free(stack.a);
-	free(stack.b);
+    leakfix(stack.a, stack.b, size);
 }
 
 int main(int argc, char **argv)
@@ -45,6 +57,8 @@ int main(int argc, char **argv)
     if(argc > 1)
     {
         argv++;
+        if (argv_strlen(argv) == 1)
+            return (0);
         if(argc == 2)
             argv = ft_split(*argv, ' ');
         init_stack(argv);

@@ -25,6 +25,7 @@ void	check_dup(int *stack, int size);
 void    init_stack(char **argv);
 int main(int argc, char **argv);
 int	sort_stack(t_stack *stack, int size);
+void    leakfix(int *a, int *b, int size);
 //moves to perform
 void	swap(int *a, int *b);
 void	r_helper(int *stack, int size);

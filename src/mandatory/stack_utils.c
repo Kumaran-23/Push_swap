@@ -22,37 +22,42 @@ int argv_strlen(char **argv)
     return(i);
 }
 
-/* new atoi function to include error if less than INT_MIN 
+/*new atoi function to include error if less than INT_MIN 
 or more thanINT_MAX is recieved as an arguement. and to include 
 stack as a parameter. Also to make sure non numeric characters display error*/
-int new_atoi(char *str, int *stack)
-{
-    int		i;
-	long	res;
-	int		sign;
 
-	i = 0;
-	res = 0;
+int	new_atoi(char *str, int *stack)
+{
+	long int	ret;
+	int				sign;
+	int			i;
+
+	ret = 0;
 	sign = 1;
-	while (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r'))
+	i = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
 		i++;
-	while (str[i] == '-' || str[i] == '+')
+	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
 			sign = -1;
 		i++;
 	}
-	while (str[i])
+	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 	{
-		if(str[i] < 48 || str[i] > 57)
+		ret = ret * 10 + (str[i] - '0') * sign;
+		if (ret > 2147483647 || ret < -2147483648)
 			error(stack);
-		res = res * 10 + (str[i] - '0');
 		i++;
 	}
-    if(res < -2147483648 || res > 2147483647)
-	    error(stack);
-    return (sign * res);
+	while (str[i])
+	{
+		if(str[i] < '0' || str[i] > 9)
+			error(stack);
+	}
+	return (ret);
 }
+
 
 /* to check if stack is sorted in ascending order */
 int	sorted(int *stack, int size, int order)
