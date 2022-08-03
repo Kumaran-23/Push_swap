@@ -6,7 +6,7 @@ SRC_DIR		= src/
 OBJ		= $(SRC:.c=.o)
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra -g
-FSANITIZE	= -fsanitize=address 
+LEAKS	= -fsanitize=address
 RM			= rm -f
 
 GREEN		=	\033[1;92m
@@ -31,7 +31,7 @@ all:		$(NAME)
 $(NAME):	$(OBJ)
 			@make -C $(LIBFT)
 			@cp libft/libft.a .
-			@$(CC) $(CFLAGS) $(OBJ) $(HEADER) libft.a -o $(NAME)
+			@$(CC) $(CFLAGS) $(LEAKS) $(OBJ) $(HEADER) libft.a -o $(NAME)
 			@echo "$(GREEN)Push_swap Done!$(WHITE)"
 
 %.o: %.c
