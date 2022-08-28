@@ -28,34 +28,29 @@ stack as a parameter. Also to make sure non numeric characters display error*/
 
 int	new_atoi(char *str, int *stack)
 {
-	long int	ret;
-	int				sign;
-	int			i;
+	unsigned int		i;
+	int					neg;
+	unsigned long int	num;
 
-	ret = 0;
-	sign = 1;
 	i = 0;
+	num = 0;
+	neg = 1;
 	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
 		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			sign = -1;
+	if (str[i] == '-')
+		neg = -1;
+	if (str[i] == '+' || str[i] == '-')
 		i++;
-	}
-	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
-	{
-		ret = ret * 10 + (str[i] - '0') * sign;
-		if (ret > 2147483647 || ret < -2147483648)
-			error(stack);
-		i++;
-	}
 	while (str[i])
 	{
-		if(str[i] < '0' || str[i] > 9)
+		if (str[i] < '0' || str[i] > '9')
 			error(stack);
+		num = (str[i] - '0') + (num * 10);
+		i++;
 	}
-	return (ret);
+	if ((num > 2147483648 && neg == -1) || (num > 2147483647 && neg == 1))
+		error(stack);
+	return (num * neg);
 }
 
 

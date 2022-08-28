@@ -90,7 +90,7 @@ int	quicksort_a(t_stack *stack, int len)
 		else if (++count)
 			ra(stack);
 	}
-	while (/*items / 2 !=  stack->size_a &&*/ count--)
+	while (count--)
 		rra(stack);
 	return (quicksort_a(stack, size / 2 + size % 2)
 		&& quicksort_b(stack, size / 2));
@@ -118,7 +118,7 @@ int	quicksort_b(t_stack *stack, int len)
 		else if (++count)
 			rb(stack);
 	}
-	while (/*len / 2 != stack->size_b &&*/ count--)
+	while (count--)
 		rrb(stack);
 	return (quicksort_a(stack, size / 2 + size % 2)
 		&& quicksort_b(stack, size / 2));
