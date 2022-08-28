@@ -4,7 +4,8 @@
 void    error(int *stack)
 {
     free(stack);
-    ft_printf("Error\n");
+    write(2 , "Error", 5);
+	write(2, "\n", 1);
     exit(1);
 }
 
