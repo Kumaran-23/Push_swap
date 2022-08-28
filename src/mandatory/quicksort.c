@@ -1,26 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quicksort.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snair <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/25 14:07:44 by snair             #+#    #+#             */
+/*   Updated: 2022/08/25 14:40:43 by snair            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/push_swap.h"
 #include "../libft/inc/ft_printf.h"
 
-int     get_min(int *stack, int len)
+int	get_min(int *stack, int len)
 {
-        int     temp;
-        int     i;
+	int	temp;
+	int	i;
 
-        i = 0;
-        temp = stack[i];
-        while (len--)
-        {
-                if (temp > stack[i])
-                        temp = stack[i];
-                i++;
-        }
-        return (temp);
+	i = 0;
+	temp = stack[i];
+	while (len--)
+	{
+		if (temp > stack[i])
+			temp = stack[i];
+		i++;
+	}
+	return (temp);
 }
 
 void	rotate_5(t_stack *stack, int len)
 {
-	int i;
-	int min;
+	int	i;
+	int	min;
 
 	min = get_min(stack->a, len);
 	i = 0;
@@ -28,19 +40,18 @@ void	rotate_5(t_stack *stack, int len)
 		i++;
 	if (i < len / 2 + len % 2)
 		ra(stack);
-		
 	else
 		rra(stack);
 }
 
 int	sort_5(t_stack *stack, int len)
 {
-	int i;
-	i = 0;
+	int	i;
 
-	if (len <=3)
+	i = 0;
+	if (len <= 3)
 		return (quicksort_3(stack, len));
-	while(len != 3)
+	while (len != 3)
 	{
 		if (stack->a[0] == get_min(stack->a, len) && len--)
 			pb(stack);
@@ -61,13 +72,13 @@ int	sort_5(t_stack *stack, int len)
 	return (1);
 }
 
-
-/*-pivot gets initialized in get_pivot function
-  -len/2 + len % 2 is to account for odd number
-  -if first element less than pivot push to b
-  -if not ra till first element less than pivot
-  -count keeps track of how many times times ra are made 
-  -minus when rra is done*/
+/**pivot gets initialized in get_pivot function
+ **len/2 + len % 2 is to account for odd number
+ **if first element less than pivot push to b
+ **if not ra till first element less than pivot
+ **count keeps track of how many times times ra are made 
+ **minus when rra is done
+ **/
 
 int	quicksort_a(t_stack *stack, int len)
 {

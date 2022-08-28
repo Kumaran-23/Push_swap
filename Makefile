@@ -5,8 +5,8 @@ LIBFT		= libft
 SRC_DIR		= src/
 OBJ		= $(SRC:.c=.o)
 CC			= gcc
-CFLAGS		= -Wall -Werror -Wextra -g
-LEAKS	= -fsanitize=address
+CFLAGS		= -Wall -Werror -Wextra -g 
+LEAKS	= -fsanitize=address -g3
 RM			= rm -f
 
 GREEN		=	\033[1;92m

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snair <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/25 14:09:15 by snair             #+#    #+#             */
+/*   Updated: 2022/08/25 14:34:25 by snair            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/push_swap.h"
 #include "../libft/inc/ft_printf.h"
 
@@ -60,7 +72,7 @@ void	sort_3a(t_stack *s)
 		rra(s);
 }
 
-int		quicksort_3(t_stack *stack, int len)
+int	quicksort_3(t_stack *stack, int len)
 {
 	if (len == 3 && stack->a_size == 3)
 		sort_3a(stack);
@@ -72,12 +84,12 @@ int		quicksort_3(t_stack *stack, int len)
 	else
 	{
 		while (len != 3 || !(stack->a[0] < stack->a[1]
-					&& stack->a[1] < stack->a[2]))
+				&& stack->a[1] < stack->a[2]))
 		{
 			if (stack->a[0] > stack->a[1] && stack->a[2])
 				sa(stack);
-			else if (!(stack->a[2] > stack->a[0] 
-				&& stack->a[2] > stack->a[1]) && len--)
+			else if (!(stack->a[2] > stack->a[0]
+					&& stack->a[2] > stack->a[1]) && len--)
 				pb(stack);
 			else if (len++)
 				pa(stack);
@@ -86,7 +98,7 @@ int		quicksort_3(t_stack *stack, int len)
 	return (1);
 }
 
-int		quicksort_3b(t_stack *stack, int len)
+int	quicksort_3b(t_stack *stack, int len)
 {
 	if (len == 2)
 	{
